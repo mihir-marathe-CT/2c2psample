@@ -12,8 +12,6 @@ else
 echo "ERROR in GENERATING PRIVATE KEY...ABORTING";
 fi
 
-
-
 if [ -f certfile.csr ]
 then
 echo "=======================\n";
@@ -25,16 +23,13 @@ else
 echo "ERROR in GENERATING SELF SIGN CERTIFICATE...ABORTING";
 fi
 
-
-
-
-
 if [ -f cert.crt ]
 then
 rm certfile.csr
 echo "=======================\n";
 echo "FINISH. Certificate created";
 echo "=======================\n";
+openssl pkcs8 -topk8 -inform PEM -outform DER -in iosprivate.pem -out private.der -nocrypt
 
 fi
 
