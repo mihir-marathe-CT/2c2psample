@@ -30,7 +30,7 @@ public class DoPayment {
         data.put("name","m");
         payment.put("data",data);
         HashMap<String, Object> payload = new HashMap<>();
-        payload.put("paymentToken","kSAops9Zwhos8hSTSeLTUceUerWzzPheCUDky6x/1xLwSPRc5i8CPXWGZ2JBQxTCJR1xhgwh0hfoFNLiclLIddG3XpTJtMpXtdsKnB3AgRkARFJ5u2V8imxsDEI7cxmZ");
+        payload.put("paymentToken","kSAops9Zwhos8hSTSeLTUXQbroQEn8/zdw2Zxncbom3D7gZo/CI63iF2jqgiTfTTjLOxV2yV2DqozU9je4QknjqJ57UF9l1uq3CSoULyDE3ImQNrIRwDX2HaPDLAFjkQ");
         payload.put("payment",payment);
 
         try {

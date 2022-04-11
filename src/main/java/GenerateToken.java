@@ -14,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class Main {
+public class GenerateToken {
 
     public static void main(String[] args) {
 
@@ -22,13 +22,17 @@ public class Main {
         String secretKey = "33949FCDF8791E4DC33E186BA30C93232870F093CCC2D4CCC4CE215B819B6550";
 
         HashMap<String, Object> payload = new HashMap<>();
-        
-        payload.put("merchantID","702702000001875");
-        payload.put("invoiceNo","pay2");
-        payload.put("description","item 1");
-        payload.put("amount",1000.00);
-        payload.put("currencyCode","SGD");
+
         payload.put("backendReturnUrl","https://ad054a49-7121-4613-8aab-2f741310d336.mock.pstmn.io/2c2p/shell");
+        payload.put("merchantID","702702000001875");
+        payload.put("invoiceNo","pay11");
+        payload.put("description","monday");
+        payload.put("amount",10.00);
+        payload.put("currencyCode","SGD");
+        payload.put("paymentExpiry","2022-04-25 12:00:00");
+        payload.put("immediatePayment",false);
+      //  payload.put("tokenizeOnly",true);
+
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
