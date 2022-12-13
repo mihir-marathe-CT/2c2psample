@@ -51,7 +51,7 @@ public class SettleDer {
 
         String paymentRequest =
             "<PaymentProcessRequest><version>3.8</version><merchantID>702702000001875</merchantID>"
-                + "<processType>S</processType><invoiceNo>pay11</invoiceNo><actionAmount>10.00</actionAmount></PaymentProcessRequest>";
+                + "<processType>I</processType><invoiceNo>pay1101</invoiceNo><actionAmount>10.00</actionAmount></PaymentProcessRequest>";
 
         FileInputStream is = new FileInputStream(
             "/Users/mihirvmarathe/IdeaProjects/2c2p/2c2p/jwt.cer"); ////2c2p public cert key

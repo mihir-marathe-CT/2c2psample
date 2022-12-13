@@ -23,15 +23,15 @@ public class GenerateToken {
 
         HashMap<String, Object> payload = new HashMap<>();
 
-        payload.put("backendReturnUrl","https://ad054a49-7121-4613-8aab-2f741310d336.mock.pstmn.io/2c2p/shell");
+        payload.put("backendReturnUrl","https://a1798905-7eb8-4794-8934-b1b7630097cf.mock.pstmn.io/cp");
         payload.put("merchantID","702702000001875");
-        payload.put("invoiceNo","pay11");
+        payload.put("invoiceNo","1750951463355AAF0KUVW");
         payload.put("description","monday");
-        payload.put("amount",10.00);
+        payload.put("amount",1.00);
         payload.put("currencyCode","SGD");
-        payload.put("paymentExpiry","2022-04-25 12:00:00");
-        payload.put("immediatePayment",false);
-      //  payload.put("tokenizeOnly",true);
+//        payload.put("paymentExpiry","2022-04-28 12:00:00");
+//        payload.put("immediatePayment",false);
+        //payload.put("tokenizeOnly",true);
 
 
         try {

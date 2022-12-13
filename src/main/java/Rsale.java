@@ -7,11 +7,14 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
+import com.nimbusds.jose.crypto.RSADecrypter;
 import com.nimbusds.jose.crypto.RSAEncrypter;
 import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.crypto.bc.BouncyCastleProviderSingleton;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jwt.EncryptedJWT;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -46,7 +49,8 @@ public class Rsale {
 
         String paymentRequest =
             "<PaymentProcessRequest><version>3.8</version><merchantID>702702000001875</merchantID>"
-                + "<processType>S</processType><invoiceNo>pay2</invoiceNo></PaymentProcessRequest>";
+                + "<actionAmount>150.0</actionAmount>" +
+                "<processType>I</processType><invoiceNo>1850951463355AAF0KUVW</invoiceNo></PaymentProcessRequest>";
 
         FileInputStream is = new FileInputStream(
             "/Users/mihirvmarathe/IdeaProjects/2c2p/2c2p/jwt.cer"); ////2c2p public cert key
@@ -117,6 +121,22 @@ public class Rsale {
                 response.append(inputLine);
             }
             in.close();
+            System.out.println(response);
+            JWSObject jwsObjectRes = JWSObject.parse(response.toString());
+
+            RSAKey rsaJWERes = RSAKey.parse(jwePubKey);
+            RSAPublicKey jweRsaPubKeyRes = rsaJWERes.toRSAPublicKey();
+
+            boolean verified = jwsObjectRes.verify(new RSASSAVerifier(jweRsaPubKeyRes));
+
+            if(verified) {
+                JWEObject jweRes = EncryptedJWT.parse(jwsObjectRes.getPayload().toString());
+                jweRes.decrypt(new RSADecrypter(jwsPrivateKey));
+                String responsePayload = jweRes.getPayload().toString();
+                System.out.println(responsePayload);
+            }else{
+                System.out.println("panic");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
