@@ -50,10 +50,10 @@ public class Rsale {
         String paymentRequest =
             "<PaymentProcessRequest><version>3.8</version><merchantID>702702000001875</merchantID>"
                 + "<actionAmount>150.0</actionAmount>" +
-                "<processType>I</processType><invoiceNo>1850951463355AAF0KUVW</invoiceNo></PaymentProcessRequest>";
+                "<processType>I</processType><invoiceNo>1850951463355</invoiceNo></PaymentProcessRequest>";
 
         FileInputStream is = new FileInputStream(
-            "/Users/mihirvmarathe/IdeaProjects/2c2p/2c2p/jwt.cer"); ////2c2p public cert key
+            "/Users/mihirmarathe/IdeaProjects/2c2psample2024/2c2p/jwt.cer"); ////2c2p public cert key
 
         JWEAlgorithm alg = JWEAlgorithm.RSA_OAEP;
         EncryptionMethod enc = EncryptionMethod.A256GCM;
@@ -64,7 +64,7 @@ public class Rsale {
         RSAKey rsaJWE = RSAKey.parse(jwePubKey);
         RSAPublicKey jweRsaPubKey = rsaJWE.toRSAPublicKey();
 
-        File file = new File("/Users/mihirvmarathe/IdeaProjects/2c2p/self/script/p.key");
+        File file = new File("/Users/mihirmarathe/IdeaProjects/2c2psample2024/self/script/p.key");
 
         String key = Files.readString(file.toPath(), Charset.defaultCharset());
 
