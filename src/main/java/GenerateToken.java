@@ -7,7 +7,9 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
@@ -18,21 +20,26 @@ public class GenerateToken {
 
     public static void main(String[] args) {
 
+
         String token="";
-        String secretKey = "33949FCDF8791E4DC33E186BA30C93232870F093CCC2D4CCC4CE215B819B6550";
+        String secretKey = "499191E0E41AFECEC26DE59A0EF6DECE57687EAA10F292A5206452B2204ED1E5";
 
         HashMap<String, Object> payload = new HashMap<>();
 
-        payload.put("backendReturnUrl","https://a1798905-7eb8-4794-8934-b1b7630097cf.mock.pstmn.io/cp");
-        payload.put("merchantID","702702000001875");
-        payload.put("invoiceNo","1750951463355AAF0KUVW");
-        payload.put("description","monday");
-        payload.put("amount",1.00);
-        payload.put("currencyCode","SGD");
-//        payload.put("paymentExpiry","2022-04-28 12:00:00");
-//        payload.put("immediatePayment",false);
-        //payload.put("tokenizeOnly",true);
+        double d = 1.00;
+        DecimalFormat df = new DecimalFormat("#.00");
+        System.out.print(df.format(d));
 
+        String[] tokens = new String[1];
+        tokens[0] = "04062415512440757977";
+        payload.put("backendReturnUrl","https://a1798905-7eb8-4794-8934-b1b7630097cf.mock.pstmn.io/cp");
+        payload.put("merchantID","458458000002539");
+        payload.put("invoiceNo","8953951463355AAF0KUVWG");
+        payload.put("description","monday");
+        payload.put("amount", 1.09);
+        payload.put("currencyCode","MYR");
+        payload.put("cardTokens",tokens);
+        payload.put("request3DS","N");
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -91,6 +98,43 @@ public class GenerateToken {
             HashMap<String, Object> capture = new HashMap<>();
 
             capture.put("paymentToken",paymentToken);
+
+            JSONObject requestDataDoPaymentNestedData = new JSONObject();
+            JSONObject requestDataDoPaymentNestedCode = new JSONObject();
+            requestDataDoPaymentNestedCode.put("channelCode","CC");
+
+//            requestDataDoPaymentNestedData.put("name","test");
+//            requestDataDoPaymentNestedData.put("email","test@shell.com");
+            requestDataDoPaymentNestedData.put("token","04062415512440757977");
+
+            JSONObject requestDataDoPaymentNested = new JSONObject();
+            requestDataDoPaymentNested.put("code",requestDataDoPaymentNestedCode);
+            requestDataDoPaymentNested.put("data",requestDataDoPaymentNestedData);
+
+            JSONObject requestDataDoPayment = new JSONObject();
+            requestDataDoPayment.put("paymentToken", paymentToken);
+            requestDataDoPayment.put("payment",requestDataDoPaymentNested);
+
+            String endpointDoPaY = "https://sandbox-pgw.2c2p.com/payment/4.1/payment";
+            URL objdOpAY = new URL(endpointDoPaY);
+            HttpsURLConnection conDoPay = (HttpsURLConnection) objdOpAY.openConnection();
+            conDoPay.setRequestMethod("POST");
+            conDoPay.setRequestProperty("Content-Type", "application/*+json");
+            conDoPay.setRequestProperty("Accept", "text/plain");
+            conDoPay.setDoOutput(true);
+            DataOutputStream wrDoPay = new DataOutputStream(conDoPay.getOutputStream());
+            wrDoPay.writeBytes(requestDataDoPayment.toString());
+            wrDoPay.flush();
+            wrDoPay.close();
+
+            BufferedReader inDoPy = new BufferedReader(new InputStreamReader(conDoPay.getInputStream()));
+            String inputLineDoPy;
+            StringBuffer responseDoPy = new StringBuffer();
+
+            while ((inputLineDoPy = inDoPy.readLine()) != null) {
+                responseDoPy.append(inputLineDoPy);
+            }
+            inDoPy.close();
 
         }catch(Exception e){
             e.printStackTrace();

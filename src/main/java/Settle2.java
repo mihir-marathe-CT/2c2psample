@@ -50,9 +50,18 @@ public class Settle2 {
         Security.addProvider(BouncyCastleProviderSingleton.getInstance());
         Security.setProperty("crypto.policy", "unlimited");
 
+//        String paymentRequest =
+//            "<PaymentProcessRequest><version>3.8</version><merchantID>458458000002539</merchantID>"
+//                + "<processType>S</processType><invoiceNo>8953951463355AAF0KUVWC</invoiceNo><actionAmount>1.09</actionAmount></PaymentProcessRequest>";
+
         String paymentRequest =
-            "<PaymentProcessRequest><version>3.8</version><merchantID>702702000001875</merchantID>"
-                + "<processType>S</processType><invoiceNo>pay5</invoiceNo></PaymentProcessRequest>";
+                "<PaymentProcessRequest>\n" +
+                        "  <version>3.8</version>\n" +
+                        "  <merchantID>458458000002539</merchantID>\n" +
+                        "  <invoiceNo>8953951463355AAF0KUVWC</invoiceNo>\n" +
+                        "  <actionAmount>1.09</actionAmount>\n" +
+                        "  <processType>I</processType>\n" +
+                        "</PaymentProcessRequest>";
 
         JWEAlgorithm alg = JWEAlgorithm.RSA_OAEP;
         EncryptionMethod enc = EncryptionMethod.A256GCM;
